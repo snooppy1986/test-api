@@ -1,6 +1,6 @@
 {
   "name": "abz-front",
-  "homepage": "https://snooppy1986.github.io/test-api/",
+  "homepage": "https://snooppy1986.github.io/test-api",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -11,7 +11,7 @@
     "start": "vite",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "npm run build && gh-pages -d dist"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

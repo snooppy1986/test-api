@@ -13,7 +13,7 @@ const root = document.getElementById("root");
 
 
 ReactDom.createRoot(root).render(
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
        <Routes>
             <Route path="/" element={ <App /> } />
             <Route path="user/:id" element={ <ShowUser /> } />
