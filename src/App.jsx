@@ -8,7 +8,10 @@ import axios from 'axios';
 
 import { EyeIcon } from "@heroicons/react/24/outline";
 
+
 function App() {
+  const serverUrl = import.meta.env.VITE_API_URL;
+
   const [users, setUsers] = useState({}); 
   
   const [count, setCount] = useState(() => {
@@ -23,7 +26,7 @@ function App() {
 
     return page ? page : 1;
   });
-  const [apiUrl, setApiUrl] = useState("http://localhost:8080/api/users?page="+page+"&count="+count);
+  const [apiUrl, setApiUrl] = useState(serverUrl+"/users?page="+page+"&count="+count);
   const [usersCountFrom, setUsersCountFrom] = useState(1);
   const [usersCountTo, setUsersCountTo] = useState(1);
   const [errors, setErrors] = useState(null);
@@ -48,49 +51,25 @@ function App() {
         
         console.info("element index: ", elementIndex, 'usersCountFrom', usersCountFrom);
         newUsersList.users.map((user)=>(
-          //console.info(elementIndex += 1)
           user.listIndex = elementIndex +=1
         ))
 
         console.log(newUsersList); 
-        setUsers(response.data);
+        setUsers(response.data);        
         
-        /* setUsersCountFrom((countFrom) => {
-          if(response.data.page === 1){
-            return 1;
-          }
-          if(paginationTypeShowMore){
-            return countFrom;
-          }
-          return (response.data.page * response.data.count - response.data.count)+1;
-        }); */
       }).catch(error => {       
         setErrors(error.response.data);
       });    
   };
 
- 
-  /* const handleSetCount = (count) => {    
-    setCount(count); 
-    //console.info('count is updated'); 
-  }
-  
-  const handleSetPage = (page) => {    
-    setPage(page);   
-  }   */
   
   const updateHttp = () => {
-    //let url = `http://localhost:8080/api/users?page=${page}&count=${count}`;
-    //console.log(url);
     window.history.replaceState(null, 'page title', `?page=${page}&count=${count}`);
   }
 
-  const handleUpdateUsersList = (pageUrl) => {
-    //alert('handle update users list run');
+  const handleUpdateUsersList = (pageUrl) => {    
     setPaginationTypeShowMore(false);
-    setApiUrl(pageUrl);
-    //setPage(page + 1);
-    //users.users = [];6
+    setApiUrl(pageUrl);    
   }
 
   const showMore = () => {
@@ -100,7 +79,7 @@ function App() {
  
   useEffect(() => { 
     if(page){      
-      setApiUrl("http://localhost:8080/api/users?page="+page+"&count="+count); 
+      setApiUrl(serverUrl+"/users?page="+page+"&count="+count); 
     } 
         
   }, [count, page]);
@@ -113,8 +92,7 @@ function App() {
 
   }, [apiUrl]);
   
-  useEffect(() => {
-    //alert('final');
+  useEffect(() => {   
     if(!paginationTypeShowMore)     
       window.scroll(0,0);
     
@@ -139,10 +117,7 @@ function App() {
     })  
   
   }, [users]);
-  
-  console.info('updated users', users);
-  //console.log('users', users, 'count show more', countShowMore, 'count', count, 'page', page);
-  
+ 
   return (
     <>
       {errors && ( 

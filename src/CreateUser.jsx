@@ -4,6 +4,7 @@ import Select from 'react-select';
 import axios from 'axios';
 
 function CreateUser(){
+    const serverUrl = import.meta.env.VITE_API_URL;
     const refImageInput = React.useRef();
 
     const [token, setToken] = useState('');
@@ -40,7 +41,7 @@ function CreateUser(){
     }
 
     const handleRefreshToken = () => {
-        getToken('http://localhost:8080/api/token')
+        getToken(`${serverUrl}/token`);
     }
 
     const createUser = (event) => {
@@ -58,7 +59,7 @@ function CreateUser(){
         formData.append('position_id', position.id,);
         formData.append('photo', photo);        
 
-        axios.post("http://localhost:8080/api/users", formData, config)
+        axios.post(`${serverUrl}/users`, formData, config)
             .then((response)=>{                
                 setResponse(response.data);                
                 setName('');
@@ -81,8 +82,8 @@ function CreateUser(){
     
 
     useEffect(() => {
-        getPositions("http://localhost:8080/api/positions");
-        getToken("http://localhost:8080/api/get-token")
+        getPositions(`${serverUrl}/positions`);
+        getToken(`${serverUrl}/get-token`)
     }, []);    
 
     return (
@@ -98,9 +99,9 @@ function CreateUser(){
                 <div>
                     <h2 className='text-red-600'>{errors.message}</h2>
                     <ul className="list-disc ml-6">
-                            {errors.errors &&(                                
-                                Object.keys(errors.errors).map((key) => {                                    
-                                    return <li key={key} className='text-red-600'>{key}: {errors.errors[key][0]}</li>
+                            {errors.fails &&(                                
+                                Object.keys(errors.fails).map((key) => {                                    
+                                    return <li key={key} className='text-red-600'>{key}: {errors.fails[key][0]}</li>
                                 })
                         )}                    
                     </ul>                     

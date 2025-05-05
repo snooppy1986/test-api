@@ -11,7 +11,6 @@ import ShowUser from './ShowUser.jsx';
 
 const root = document.getElementById("root");
 
-
 ReactDom.createRoot(root).render(
     <BrowserRouter basename={import.meta.env.BASE_URL}>
        <Routes>

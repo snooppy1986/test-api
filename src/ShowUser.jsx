@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import axios from 'axios';
 
 function ShowUser(props){
+    const serverUrl = import.meta.env.VITE_API_URL;
     const {id} = useParams();
     const [user, setUser] = useState({});
 
@@ -20,7 +21,7 @@ function ShowUser(props){
       };
 
     useEffect(() => {
-        const u = getUser(`http://localhost:8080/api/users/${id}`);
+        const u = getUser(`${serverUrl}/users/${id}`);
         setUser(u);
     }, []);
 
